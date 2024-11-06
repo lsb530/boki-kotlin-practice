@@ -1,5 +1,6 @@
-package coroutine
+package coroutine.basic
 
+import coroutine.util.printWithThread
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.yield
@@ -18,9 +19,4 @@ suspend fun newRoutine() {
     val num2 = 2
     yield()
     printWithThread { "$num1 + $num2 = ${num1 + num2}" }
-}
-
-fun printWithThread(action: () -> Any) {
-    val result = action()
-    println("[${Thread.currentThread().name}] $result")
 }
