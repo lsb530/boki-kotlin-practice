@@ -93,3 +93,39 @@ kotlinx.coroutines 패키지의 suspend 함수 사용
 ### 주의
 코루틴 내부에서 try-catch-finally를 사용할 때 흐름에 영향을 줄 수 있다</br>
 EX)`cancel()` 실행시 CancellationException이 발생하는데 catch후에 다시 throw를 하지 않는 경우
+
+# 4. 코루틴의 예외처리와 Job의 상태변화
+## 부모-자식 코루틴이 아닌 Root 코루틴 만드는 방법
+```kotlin
+CoroutineScope(Dispatchers.Default).launch {
+    // ..
+}
+```
+
+## launch와 async의 예외 발생 차이
+* launch: 예외가 발생하면, 예외를 출력하고 코루틴이 종료
+* async: 예외가 발생해도, 예외를 출력하지 않음. 예외를 확인하려면, await()이 필요
+
+## 예외 전파
+* 기본: RootCoroutineScope가 아닌 부모/자식간의 코루틴 스코프였다면, 자식 코루틴에서 발생한 예외는 부모에게 전파
+* 전파를 원치 않을 경우
+
+## 예외 핸들링
+1. 직관적인 try-catch-finally
+2. CoroutineExceptionHandler(예외 발생 이후 에러 로깅/에러 메시지 전송 등에 활용)
+
+## CoroutineExceptionHandler 주의사항
+1. launch에만 적용 가능
+2. 부모 코루틴이 있으면 동작 X
+
+## 코루틴 취소 예외 정리
+1. 발생한 예외가 CancellationException인 경우 취소로 간주하고 부모 코루틴에게 전파 X
+2. 그 외 다른 예외가 발생한 경우 실패로 간주하고 부모 코루틴에게 전파 O
+3. 다만, 내부적으로는 취소나 실패 모두 "취소됨" 상태로 관리한다
+
+## Job(코루틴)의 Life Cycle
+```text
+NEW -> ACTIVE -> COMPLETING -> COMPLETED
+     (예외발생)↘️  ↙️
+        CANCELLING -> CANCELLED
+```
