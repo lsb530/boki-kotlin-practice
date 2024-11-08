@@ -171,3 +171,19 @@ Map + Set을 합쳐놓은 형태
 
 ## ExecutorService to Dispatcher
 asCoroutineDispatcher
+
+# 8. Suspending function
+* launch의 signature. block: suspending lambda
+* 코루틴이 중지되었다가 재개`될 수 있는` 지점(suspension point)
+* 여러 비동기 라이브러리를 사용할 수 있도록 도움
+
+## 추가적인 suspend 함수들
+1. coroutineScope
+   * 추가적인 코루틴을 만들고, 주어진 함수 블록이 바로 실행된다
+   * 만들어진 코루틴이 모두 완료되면 다음 코드로 넘어간다
+2. withContext
+   * coroutineScope과 기본적으로 유사
+   * context에 변화를 주는 기능이 추가적으로 존재
+3. withTimeout / withTimeoutOrNull
+   * coroutineScope과 기본적으로 유사
+   * 주어진 시간 안에 새로 생긴 코루틴이 완료되어야 함
