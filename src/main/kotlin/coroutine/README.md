@@ -80,7 +80,7 @@ VM Options: `-Dkotlinx.coroutines.debug`
 * 주의사항: CoroutineStart.LAZY 옵션을 사용하면, await() 함수 호출 시 계산결과를 계속 기다림
   * LAZY + start()를 동시에 해주면 해결 가능
 
-# 3. 코루틴의 취소
+# 4. 코루틴의 취소
 ## 취소에 협조하는 방법1
 delay() / yield() 같은</br>
 kotlinx.coroutines 패키지의 suspend 함수 사용
@@ -94,7 +94,7 @@ kotlinx.coroutines 패키지의 suspend 함수 사용
 코루틴 내부에서 try-catch-finally를 사용할 때 흐름에 영향을 줄 수 있다</br>
 EX)`cancel()` 실행시 CancellationException이 발생하는데 catch후에 다시 throw를 하지 않는 경우
 
-# 4. 코루틴의 예외처리와 Job의 상태변화
+# 5. 코루틴의 예외처리와 Job의 상태변화
 ## 부모-자식 코루틴이 아닌 Root 코루틴 만드는 방법
 ```kotlin
 CoroutineScope(Dispatchers.Default).launch {
@@ -129,3 +129,19 @@ NEW -> ACTIVE -> COMPLETING -> COMPLETED
      (예외발생)↘️  ↙️
         CANCELLING -> CANCELLED
 ```
+
+# 6. Structured Concurrency
+* 부모 - 자식 관계의 코루틴이 한 몸처럼 움직이는 것
+* 수많은 코루틴이 유실되거나 누수되지 않도록 보장
+* 코드 내의 에러가 유실되지 않고, 적절히 보고될 수 있도록 보장
+
+## 정리
+자식 코루틴에서 예외가 발생할 경우, 
+Structured Concurrency에 의해 부모 코루틴이 취소되고,
+부모 코루틴의 다른 자식 코루틴들도 취소된다.
+
+자식 코루틴에서 예외가 발생하지 않더라도,
+부모 코루틴이 취소되면, 자식 코루틴들이 취소된다.
+
+다만, CancellationException은 정상적인 취소로 간주하기 때문에
+부모 코루틴에게 전파되지 않고, 부모 코루틴의 다른 자식 코루틴을 취소시키지도 않는다.
