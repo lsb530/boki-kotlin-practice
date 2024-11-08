@@ -145,3 +145,29 @@ Structured Concurrency에 의해 부모 코루틴이 취소되고,
 
 다만, CancellationException은 정상적인 취소로 간주하기 때문에
 부모 코루틴에게 전파되지 않고, 부모 코루틴의 다른 자식 코루틴을 취소시키지도 않는다.
+
+# 7. CoroutineScope & CoroutineContext
+## CoroutineScope
+* `launch`, `async`는 CoroutineScope의 확장함수
+  * `runBlocking`: 코루틴<->루틴 세계 연결하며 CoroutineScope을 제공
+* 직접 CoroutineScope을 만든다면?
+  * `runBlocking`이 필요하지 X
+* 해당 클래스에서 사용하던 코루틴을 한 번에 종료시킬 수 있다
+
+## CoroutineContext
+코루틴과 관련된 여러가지 데이터를 갖고 있는 객체
+Map + Set을 합쳐놓은 형태
+
+## Dispatcher
+코루틴이 어떤 스레드에 배정될지를 관리하는 역할
+* 종류
+1. Dispatchers.Default
+   * 가장 기본적인 디스패처, CPU 자원을 많이 쓸 때 권장. 별다른 설정이 없으면 이 디스패처가 사용
+2. Dispatchers.IO
+   * I/O 작업에 최적화된 디스패치
+3. Dispatchers.Main
+   * 보통 UI 컴포넌트를 조작히 위한 디스패처
+   * 특정 의존성을 갖고 있어야 정상적으로 활용 가능
+
+## ExecutorService to Dispatcher
+asCoroutineDispatcher
