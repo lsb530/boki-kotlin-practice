@@ -206,3 +206,17 @@ public interface Continuation<in T> {
     public fun resumeWith(result: Result<T>)
 }
 ```
+
+# Fin. 마무리
+### 코루틴의 특징
+* callback hell을 해결
+* Kotlin 언어 키워드가 아닌 라이브러리
+
+### 사용처
+* 비동기 non-blocking 혹은 동시성이 필요한 곳
+* Client: Asynchronous UI
+* Server: 여러 API를 동시에 호출
+  * RestTemplate(blocking): 코루틴을 여러개 만들어 멀티스레드에 배정
+  * WebClient(non-blocking): 하나의 스레드에서 여러 API를 동시 호출
+* Webflux(Asynchronous, non-blocking Framework)
+* 동시성 테스트
