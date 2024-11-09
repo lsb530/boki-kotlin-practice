@@ -80,6 +80,7 @@ VM Options: `-Dkotlinx.coroutines.debug`
 * 주의사항: CoroutineStart.LAZY 옵션을 사용하면, await() 함수 호출 시 계산결과를 계속 기다림
   * LAZY + start()를 동시에 해주면 해결 가능
 
+
 # 4. 코루틴의 취소
 ## 취소에 협조하는 방법1
 delay() / yield() 같은</br>
@@ -93,6 +94,7 @@ kotlinx.coroutines 패키지의 suspend 함수 사용
 ### 주의
 코루틴 내부에서 try-catch-finally를 사용할 때 흐름에 영향을 줄 수 있다</br>
 EX)`cancel()` 실행시 CancellationException이 발생하는데 catch후에 다시 throw를 하지 않는 경우
+
 
 # 5. 코루틴의 예외처리와 Job의 상태변화
 ## 부모-자식 코루틴이 아닌 Root 코루틴 만드는 방법
@@ -130,6 +132,7 @@ NEW -> ACTIVE -> COMPLETING -> COMPLETED
         CANCELLING -> CANCELLED
 ```
 
+
 # 6. Structured Concurrency
 * 부모 - 자식 관계의 코루틴이 한 몸처럼 움직이는 것
 * 수많은 코루틴이 유실되거나 누수되지 않도록 보장
@@ -145,6 +148,7 @@ Structured Concurrency에 의해 부모 코루틴이 취소되고,
 
 다만, CancellationException은 정상적인 취소로 간주하기 때문에
 부모 코루틴에게 전파되지 않고, 부모 코루틴의 다른 자식 코루틴을 취소시키지도 않는다.
+
 
 # 7. CoroutineScope & CoroutineContext
 ## CoroutineScope
@@ -172,6 +176,7 @@ Map + Set을 합쳐놓은 형태
 ## ExecutorService to Dispatcher
 asCoroutineDispatcher
 
+
 # 8. Suspending function
 * launch의 signature. block: suspending lambda
 * 코루틴이 중지되었다가 재개`될 수 있는` 지점(suspension point)
@@ -187,3 +192,17 @@ asCoroutineDispatcher
 3. withTimeout / withTimeoutOrNull
    * coroutineScope과 기본적으로 유사
    * 주어진 시간 안에 새로 생긴 코루틴이 완료되어야 함
+
+
+# 9. 코루틴과 Continuation
+* Continuation(with label)을 전달하며 Callback으로 활용 
+
+## CPS: Continuation Passing Style
+
+## 실제 Continuation interface
+```kotlin
+public interface Continuation<in T> {
+    val context: CoroutineContext
+    public fun resumeWith(result: Result<T>)
+}
+```
