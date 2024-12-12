@@ -12,10 +12,14 @@ public class Lec05Main {
     }
 
     private String getGrade(int score) {
-        if (score >= 90) return "A";
-        else if (score >= 80) return "B";
-        else if (score >= 70) return "C";
-        else return "F";
+        if (score >= 90)
+            return "A";
+        else if (score >= 80)
+            return "B";
+        else if (score >= 70)
+            return "C";
+        else
+            return "F";
     }
 
     private void validateScoreIsNotNegative(int score) {
@@ -36,7 +40,7 @@ public class Lec05Main {
     private boolean startsWithA(Object obj) {
         if (obj instanceof String) {
             // return obj.toString().startsWith("a");
-            return ((String)obj).startsWith("a");
+            return ((String) obj).startsWith("a");
         }
         return false;
     }
@@ -44,8 +48,7 @@ public class Lec05Main {
     private void judgeNumber(int number) {
         if (number == -1 || number == 0 || number == 1) {
             System.out.println("어디서 많이 본 숫자입니다");
-        }
-        else {
+        } else {
             System.out.println("-1, 0, 1이 아닙니다");
         }
     }
