@@ -1,4 +1,4 @@
-package lec01
+package basic.lec01
 
 fun main() {
     var number1 = 10L

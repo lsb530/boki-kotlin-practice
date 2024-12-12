@@ -1,4 +1,4 @@
-package lec01;
+package basic.lec01;
 
 public class Lec01Main {
 
