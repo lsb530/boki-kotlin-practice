@@ -12,7 +12,17 @@ fun main() {
         goldFishCage.put(GoldFish("금붕어"))
 
         val fishCage = Cage2<Fish>()
-        // fishCage.moveFrom(goldFishCage) // Type mismatch!
+        fishCage.moveFrom(goldFishCage) // Type Safe!
+
+        val fish = fishCage.getFirst()
+    }
+
+    val block3 = {
+        val fishCage = Cage2<Fish>()
+        val goldFishCage = Cage2<GoldFish>()
+
+        goldFishCage.put(GoldFish("금붕어"))
+        goldFishCage.moveTo(fishCage) // Type Safe!
     }
 
     block1()
@@ -30,11 +40,18 @@ class Cage2<T : Any> {
         this.animals.add(animal)
     }
 
-    fun moveFrom(otherCage: Cage2<T>) {
+    // 변성을 줌: 무공변->공변(out: variance annotation)
+    // out: 생산자 역할만 부여(데이터를 꺼내는 역할만 수행)
+    fun moveFrom(otherCage: Cage2<out T>) {
+        otherCage.getFirst()
+        // otherCage.put(Carp("잉어")) // Type mismatch
+        // otherCage.put(this.getFirst()) // Type mismatch
         this.animals.addAll(otherCage.animals)
     }
 
-    fun moveTo(otherCage: Cage2<T>) {
+    // 변성을 줌: 반공변(contra-variant)
+    // in: 소비자 역할만 부여(데이터를 받는 역할만 수행)
+    fun moveTo(otherCage: Cage2<in T>) {
         otherCage.animals.addAll(this.animals)
     }
 }
