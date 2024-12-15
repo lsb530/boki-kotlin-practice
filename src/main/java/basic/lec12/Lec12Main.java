@@ -1,5 +1,9 @@
 package basic.lec12;
 
+import basic.c_oop.lec12.Person;
+import basic.c_oop.lec12.PersonWithJvmStaticObject;
+import basic.c_oop.lec12.PersonWithNoNameObject;
+
 public class Lec12Main {
 
     public static void main(String[] args) {
