@@ -1,5 +1,8 @@
 plugins {
     kotlin("jvm") version "2.0.10"
+    // https://github.com/melix/jmh-gradle-plugin
+    id("me.champeau.jmh") version "0.7.2"
+    // id("me.champeau.gradle.jmh") version "0.5.3"
 }
 
 group = "com.boki"
@@ -22,6 +25,14 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
+
 kotlin {
     jvmToolchain(21)
+}
+
+jmh {
+    threads = 1
+    fork = 1
+    warmupIterations = 1
+    iterations = 1
 }
