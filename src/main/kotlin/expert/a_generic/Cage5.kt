@@ -52,7 +52,7 @@ class Cage5<T>(
 }
 
 // non generic
-fun List<String>.hasIntersection(other: List<String>): Boolean {
+fun List<String>.hasIntersection1(other: List<String>): Boolean {
     return (this.toSet() intersect other.toSet()).isNotEmpty()
 }
 

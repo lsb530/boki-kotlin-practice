@@ -41,8 +41,9 @@ class Cage2<T : Any> { // non-null
         this.animals.add(animal)
     }
 
-    // 변성을 줌: 무공변->공변(out: variance annotation)
+    // 변성을 줌: 무공변->공변(co-variant)
     // out: 생산자 역할만 부여(데이터를 꺼내는 역할만 수행)
+    // out: variance annotation)
     fun moveFrom(otherCage: Cage2<out T>) {
         otherCage.getFirst()
         // otherCage.put(Carp("잉어")) // Type mismatch
