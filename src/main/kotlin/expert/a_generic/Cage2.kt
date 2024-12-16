@@ -29,7 +29,8 @@ fun main() {
     block2()
 }
 
-class Cage2<T : Any> {
+// class Cage2<T> {
+class Cage2<T : Any> { // non-null
     private val animals: MutableList<T> = mutableListOf()
 
     fun getFirst(): T {
