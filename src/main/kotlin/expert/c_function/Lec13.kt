@@ -38,6 +38,9 @@ fun main() {
 
     val result1 = calculateV2(3, 4, OperatorV2.PLUS)
     println(result1)
+
+    val result2 = OperatorV2.PLUS(3, 4)
+    println(result2)
 }
 
 fun compute(num1: Int, num2: Int, op: (Int, Int) -> Int): Int {
