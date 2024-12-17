@@ -23,7 +23,7 @@ dependencies {
     implementation("org.slf4j:slf4j-simple:2.0.16")
     // reflection
     implementation("org.jetbrains.kotlin:kotlin-reflect:2.0.10")
-
+    // java library for ContainerV3.kt의 Reflections()
     implementation("org.reflections:reflections:0.10.2")
     testImplementation(kotlin("test"))
     testImplementation("org.assertj:assertj-core:3.24.2")
